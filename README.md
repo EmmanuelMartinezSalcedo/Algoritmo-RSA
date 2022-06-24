@@ -3,18 +3,18 @@ Nombre: Emmanuel del Piero Martinez Salcedo
 
 El presente código permite generar claves públicas y secretas para la encriptación de información usando el algoritmo RSA, en esta ocación el algoritmo imprimira una tabla con 6 variables: E, D, N, M, C, M2 donde C es la clave pública y M2 la clave privada
 
-###Algoritmo RSA
+### Algoritmo RSA
 En criptografía, RSA (Rivest, Shamir y Adleman) es un sistema criptográfico de clave pública desarrollado en 1979, que utiliza factorización de números enteros. Es el primer y más utilizado algoritmo de este tipo y es válido tanto para cifrar como para firmar digitalmente.
 
 La seguridad de este algoritmo radica en el problema de la factorización de números enteros. Los mensajes enviados se representan mediante números, y el funcionamiento se basa en el producto, conocido, de dos números primos grandes elegidos al azar y mantenidos en secreto. Actualmente estos primos son del orden de 10^300, y se prevé que su tamaño siempre crezca con el aumento de la capacidad de cálculo de los ordenadores.
 
-##Funcionamiento
+## Funcionamiento
 El codigo esta inicializado con variables de 16 bits esto pues al iniciarlo con 64 gasta demasiado tiempo computacional. Así que lo he reducido a 16 para esta prueba
 Para el funcionamiento estoy usando mis funciones creadas en previos proyectos que son: Euclides, EsCompuesto y MillerRabin y añado las nuevas funciones: PrimoRandBITS, phi, RSA_KEY_GENERATOR que sirven para generar un numero aleatorio de k bits, función phi de Euler y el generador de la clave RSA respectivamente
 
 Para el experimento estoy usando una presición S de 4 para no usar mucho tiempo computacional.
 
-##Código
+## Código
 ```python
 import random
 
