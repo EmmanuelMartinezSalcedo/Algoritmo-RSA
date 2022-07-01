@@ -6,6 +6,19 @@ def Euclides(n,m):
     else:
         return Euclides(m,(n%m)) 
 
+def EuclidesEXT(n,m):
+    if m==0:
+        return (n,1,0)
+    else:
+        (d,x2,y2)=EuclidesEXT(m, n%m)
+        (x,y)=(y2,x2-(((n/m)-((n/m)%1))*y2))
+        return(d,x,y)
+
+def Inverso(a,n):
+    if Euclides(a,n)==1:
+        (d,x,y)=EuclidesEXT(a,n)
+        return (int(x%n))
+
 def EsCompuesto(a,n2,t,u):
     x= pow(a,u,n2)
     if x == 1 or x == n2 - 1:
@@ -23,7 +36,7 @@ def MillerRabin(n3,s):
         u2 = u2 // 2
         t2 = t2 + 1
     for i in range(s):
-        a1 = random.randrange(2, n3 - 1)
+        a1 = random.randrange(2, n3)
         if EsCompuesto(a1,n3,t2,u2) == True:
             return False
     return True
@@ -47,7 +60,6 @@ def phi(n4):
     return r
 
 def RSA_KEY_GENERATOR(k):
-    d2=0
     while True:
         p=PrimoRandBITS(int(k/2),4)
         q=PrimoRandBITS(int(k/2),4)
@@ -55,42 +67,35 @@ def RSA_KEY_GENERATOR(k):
             continue
         else:
             break
+
     n5=p*q
-    n5=phi(n5)
+    φ=phi(p)*phi(q)
+    
     while True:
-        e=random.randrange(2,n5-1)
-        if Euclides(e,n5)==1:
+        e=random.randrange(2,φ)
+        if Euclides(e,φ)==1:
             break
         else:
             continue
 
-    for i in range(1,e):
-        aux2=round(((i*e)-1)/n5,3)
-        if aux2-int(aux2)==0.000:
-            aux2=int(aux2)
-        if isinstance(aux2,int)==True:
-            d2=i
-            break
-        else:
-            continue
-
+    d2=Inverso(e,φ)
     return(n5,e,d2)
 
     
         
 k1=16
 esp='  '
-print('Lista E / D / N / M / C / M2')
+print('E        / D      / N    / M     / C     / M2')
 for i2 in range(10):
-    (N,E,D)=RSA_KEY_GENERATOR(k1)
-    M=random.randrange(2,pow(2,k1))
-    C=(pow(M,E))%N
-    M2=(pow(C,D))%N
-    print('{E:<{E_width}}{esp}{D:>{D_width}}{esp}{N:>{N_width}}{esp}{M:>{M_width}}{esp}{C:>{C_width}}{esp}{M2:>{M2_width}}'.format(
-        E=E, E_width=len('aaaaaa'),
+    (n_,e_,d_)=RSA_KEY_GENERATOR(k1)
+    m_=random.randrange(0,n_)
+    c_=(m_**e_)%n_
+    m2_=c_**d_%n_
+    print('{e_:<{E_width}}{esp}{d_:>{D_width}}{esp}{n_:>{N_width}}{esp}{m_:>{M_width}}{esp}{c_:>{C_width}}{esp}{m2_:>{M2_width}}'.format(
+        e_=e_, E_width=len('aaaaaa'),
         esp=esp,
-        D=D, D_width=len('aaaaaa'),
-        N=N, N_width=len('aaaaaa'),
-        M=M, M_width=len('aaaaaa'),
-        C=D, C_width=len('aaaaaa'),
-        M2=D, M2_width=len('aaaaaa'),))
+        d_=d_, D_width=len('aaaaaa'),
+        n_=n_, N_width=len('aaaaaa'),
+        m_=m_, M_width=len('aaaaaa'),
+        c_=c_, C_width=len('aaaaaa'),
+        m2_=m2_, M2_width=len('aaaaaa'),))
